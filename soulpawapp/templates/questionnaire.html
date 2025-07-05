@@ -1,0 +1,77 @@
+{%extends "questionnaire_base.html" %}
+{% block title %} Questionnaire Page {% endblock %}
+{%block question%}
+    <div class="flex flex-col w-113 h-full">
+        <div id="question-box" class="text-center pb-10 text-gray-500 font-bold text-lg">Question Goes here</div>
+{%endblock%} 
+{%block answers%}
+        <div id="answers-box" class="flex flex-col items-start justify-evenly text-wrap"></div>
+    </div>
+
+{%endblock%}
+{% block next-button %}   
+    <div><button onclick="nextQuestion()" class="h-12 w-30 p-3 sp-purple rounded-3xl text-white text-sm font-bold cursor-pointer">Next Question</button></div>
+{%endblock%}
+
+{% block script %}
+<script>
+    const questions = [
+            {
+                text: "Question 1: What would you say your experience level is with caring for dogs?",
+                answers: ["Beginner - I've never owned a dog", "Intermediate - I've owned a dog but it wasn't the sole caretaker", "Proficient - I'm an experienced dog owner and know basic behavior and training", "Advanced - I have a deep understand and experience with dogs"]
+            },
+            {
+                text: "Question 2: Which best describes your living space?",
+                answers: ["Studio/Efficiency Apartment", "1-2 Bedroom Apartment", "Townhome/Small Home", "Detatched Home with a Yard", "Large Home with Large Yard"]
+            },
+            {
+                text:"Question 3: What is your job like currently?",
+                answers: ["Full-Time employed away from home", "Full-Time employed remotely/in-person", "Remote Full-Time", "Part-Time/Student", "Mostly at home (retired,unemployed,etc.)"]
+            },
+            {
+                text: "Question 4: What is your activity level like?",
+                answers: ["Nap Champion - I prefer to be inside or take short slow walks","Casual Tail Wagger - The most I do is run errands or clean", "Begging for Walkies - I walk daily and lightly exercise", "Squirrel-Chaser - I go on jogs/hikes and go to the gym often", "Full on Zoomies - I run daily, go on hikes, and do sports"]
+            }
+        ];
+
+        let currentIndex = 0;
+
+        function nextQuestion() {
+            const questionData = questions[currentIndex];
+            const questionBox = document.getElementById("question-box");
+            const answersBox = document.getElementById("answers-box");
+
+            questionBox.textContent = questionData.text;
+            answersBox.innerHTML = ""; // Clear previous answers
+
+            questionData.answers.forEach((answer, index) => {
+                const id = `answer${index}`;
+                const wrapper = document.createElement("div");
+                wrapper.classList.add("flex", "items-start", "mb-8");
+
+                const input = document.createElement("input");
+                input.type = "radio";
+                input.name = "answer";
+                input.id = id;
+                input.value = answer;
+                input.classList.add("mt-2", "ml-7","mr-6");
+
+                const label = document.createElement("label");
+                label.htmlFor = id;
+                label.textContent = answer;
+                label.classList.add("text-gray-500", "justify-evenly", "font-bold", "text-start", "text-wrap");
+
+                wrapper.appendChild(input);
+                wrapper.appendChild(label);
+                answersBox.appendChild(wrapper);
+            });
+            currentIndex++;
+            if (currentIndex >= questions.length) {
+                currentIndex = 0;  // Loop back or disable button
+            }
+        }
+    // Initialize with the first question
+        window.onload = nextQuestion;
+
+    </script>
+{% endblock %}

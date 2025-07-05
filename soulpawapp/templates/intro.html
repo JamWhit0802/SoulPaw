@@ -1,0 +1,13 @@
+{# templates/intro.html #}
+{%extends "base.html" %} 
+{% block title %} Intro Page {% endblock %}
+{% block content %}
+    <div class="text-center space-y-1 p-1">
+        <p>Your soul dog is here!</p>
+        <p> Answer the questions on this questionairre as honestly as possible.</p>
+        <p> We'll match you with a dog that's best for you.</p>
+    </div>
+    <div class="flex items-center justify-center p-30">
+        <a href="{% url 'questionnaire' %}" class="inline-flex items-center inline-block justify-center text-center cursor-pointer sp-purple text-white font-bold py-2 px-4 rounded-full hover:bg-purple-700 focus:outline-none focus:shadow-outline h-18 w-38 text-sm">Take the Questionairre</a>
+    </div>
+{% endblock %}
