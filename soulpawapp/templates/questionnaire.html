@@ -10,7 +10,10 @@
 
 {%endblock%}
 {% block next-button %}   
-    <div><button onclick="nextQuestion()" class="h-12 w-30 p-3 sp-purple rounded-3xl text-white text-sm font-bold cursor-pointer">Next Question</button></div>
+    <div class="flex space-x-4">
+        <button onclick="prevQuestion()" id = "prev-btn" class="hidden h-12 w-30 p-3 sp-purple rounded-3xl text-white text-sm font-bold cursor-pointer">Previous Question</button>
+        <button onclick="nextQuestion()" id = "next-btn" class="h-12 w-30 p-3 sp-purple rounded-3xl text-white text-sm font-bold cursor-pointer">Next Question</button>
+    </div>
 {%endblock%}
 
 {% block script %}
@@ -18,28 +21,137 @@
     const questions = [
             {
                 text: "Question 1: What would you say your experience level is with caring for dogs?",
-                answers: ["Beginner - I've never owned a dog", "Intermediate - I've owned a dog but it wasn't the sole caretaker", "Proficient - I'm an experienced dog owner and know basic behavior and training", "Advanced - I have a deep understand and experience with dogs"]
+                answers: ["Beginner - I've never owned a dog", "Intermediate - I've owned a dog but it wasn't the sole caretaker", "Proficient - I'm an experienced dog owner and know basic behavior and training", "Advanced - I have a deep understand and experience with dogs"],                multiSelect: false
             },
             {
                 text: "Question 2: Which best describes your living space?",
-                answers: ["Studio/Efficiency Apartment", "1-2 Bedroom Apartment", "Townhome/Small Home", "Detatched Home with a Yard", "Large Home with Large Yard"]
+                answers: ["Studio/Efficiency Apartment", "1-2 Bedroom Apartment", "Townhome/Small Home", "Detatched Home with a Yard", "Large Home with Large Yard"],
+                multiSelect: false
             },
             {
                 text:"Question 3: What is your job like currently?",
-                answers: ["Full-Time employed away from home", "Full-Time employed remotely/in-person", "Remote Full-Time", "Part-Time/Student", "Mostly at home (retired,unemployed,etc.)"]
+                answers: ["Full-Time employed away from home", "Full-Time employed remotely/in-person", "Remote Full-Time", "Part-Time/Student", "Mostly at home (retired,unemployed,etc.)"],
+                multiSelect: false
             },
             {
                 text: "Question 4: What is your activity level like?",
-                answers: ["Nap Champion - I prefer to be inside or take short slow walks","Casual Tail Wagger - The most I do is run errands or clean", "Begging for Walkies - I walk daily and lightly exercise", "Squirrel-Chaser - I go on jogs/hikes and go to the gym often", "Full on Zoomies - I run daily, go on hikes, and do sports"]
+                answers: ["Nap Champion - I prefer to be inside or take short slow walks","Casual Tail Wagger - The most I do is run errands or clean", "Begging for Walkies - I walk daily and lightly exercise", "Squirrel-Chaser - I go on jogs/hikes and go to the gym often", "Full on Zoomies - I run daily, go on hikes, and do sports"],
+                multiSelect: false
+            },
+            {
+              text: "Question 5: How much time are you willing to spend with your dog playing/exercisding every day?",
+              answers: ["60-120 Minutes", "60-90 Minutes", "0-60 Minutes", "30-45 Minutes", "20-30 Minutes"],
+              multiSelect: false  
+            },
+            {
+                text: "Question 6: How much noise can you typically make in your home before it would cause a complaint?",
+                answers: ["Very Scrict - moderate noise can cause complaints", "Somewhat Strict - Occasional noise is fine if it isn't frequent", "Moderate - Loud/constant noise maty be an issue", "Fiarly tolerant - Loud noise is generally not a problem", "No Restrictions - I can be as loud as I want"],
+                multiSelect: false
+            },
+            {
+                text: "Question 7: How much barking/howling can you tolerate?",
+                answers: ["Barking and howling doesn't bother me at all!", "I can handle some barking but not too much", "Barking/howling too much will bother me a decent amount", "I can't stand it at all"],
+                multiSelect: false
+            },
+            {
+                text: "Question 8: Do you have a preference for the type of coat your dog has? (Select all that apply)",
+                answers: ["Short Hair", "Medium Length Hair", "Long Hair", "No preference"],
+                multiSelect: true
+            },
+            {
+                text: "Question 9: How often are you willing to take care of your dog's coat needs?",
+                answers: ["A few times a week (2-3x)", "About once a week", "A few times a month", "Rarely or as needed"],
+                multiSelect: false
+            },
+            {
+                text: "Question 10: What is your monthy budget for dog related expenses? (Food, Grooming, Vet Visits, Toys, etc.)",
+                answers: ["Under $75", "$75-$150", "$150-$250", "250-400", "Over $400"],
+                multiSelect: false
+            },
+            {
+                text: "Question 11: How experienced are you with training dogs?",
+                answers: ["Very experienced - I can teach almost anything", "Some Experience - I can teach most basic commands and leash training", "Not Very - I can teach sit and paw but thats about it", "No Experience - I've never trained a dog before"],
+                multiSelect: false
+            },
+            {
+                text: "Question 12: How often are you willing to spend training your dog?",
+                answers: ["Every day", "A few times a week", "Once a week", "I plan on taking them to a trainer", " I don't really care about training"],
+                multiSelect: false
+            },
+            {
+                text: "Question 13: What size dog do you prefer? (Select all that apply)",
+                answers: ["X-Small", "Small", "Medium", "Large", "X-Large"],
+                multiSelect: true
+            },
+            {
+                text: "Question 14: Would you need/prefer a low allergen dog?",
+                answers: ["Yes", "No", "No preference"],
+                multiSelect: false
+            },
+            {
+                text: "Question 15: Are you okay with a dog that drools a lot?",
+                answers: ["No drool pleae", "A little drool is fine", " I don't care about drool at all"],
+                multiSelect: false
+            },
+            {
+                text: "Question 16: Do you have other pets at home?",
+                answers: ["Yes, I have another dog", "Yes, I have a cat", "Yes, I have other pets (birds, reptiles, etc.)", "No, I have no other pets"],
+                multiSelect: false
+            },
+            {
+                text: "Question 17: Do you have qany kids at home? (Select all that apply)",
+                answers: ["Yes, I have very young children (0-5 years old)", "Yes, I have older children (6-12 years old)", "Yes, I have teenage/adult children (13+ years old)", "No, I have no children at home"],
+                multiSelect: true
+            },
+            {
+                text: "Question 18: Woul you rather have a more independent dog or one that's more social and likes attention?",
+                answers: ["I want a companion dog that follows me around and loves attention", "I'd like a balance of both", "I would like a more independent dog"],
+                multiSelect: false
+            },
+            {
+                text: "Question 19: Would you want a protective dog?",
+                answers: ["Yes, I want a dog that will protect me and my home", "No, I don't need my dog to be protective", "I have no preference"],
+                multiSelect: false
+            },
+            {
+                text: "Question 20: What is the main reason you want a dog?",
+                answers: ["Companionship - I want a loyal friend that will protect me", "Activity Partner - I want a dog to go on adventures with", "Family Pet - I want a dog for my family", "Another Furry Friend - I want to get my dog a friend", "Calm Cuddly Pal - I want a dog that will chill with me and keep me company"],
+                multiSelect: false
             }
         ];
 
         let currentIndex = 0;
+        window.onload = () => renderQuestion(0);
+        
+        let currentanswerIndex = 0;
+        let userAnswers = [];
 
         function nextQuestion() {
             const questionData = questions[currentIndex];
+            const selected = [];
+
+            const inputs = document.querySelectorAll("input[name^='answer']");
+            inputs.forEach(input => {
+                if (input.checked) selected.push(input.value);
+            });
+
+            if (selected.length === 0) {
+                alert("Please select an answer before continuing.");
+                return;
+            }
+
+            userAnswers[currentIndex] = selected;
+            renderQuestion(currentIndex + 1);
+        }
+
+
+        function renderQuestion(index) {
+            currentIndex = index;
+            const questionData = questions[currentIndex];
             const questionBox = document.getElementById("question-box");
             const answersBox = document.getElementById("answers-box");
+            const nextBtn = document.getElementById("next-btn");
+            const prevBtn = document.getElementById("prev-btn");
 
             questionBox.textContent = questionData.text;
             answersBox.innerHTML = ""; // Clear previous answers
@@ -50,11 +162,14 @@
                 wrapper.classList.add("flex", "items-start", "mb-8");
 
                 const input = document.createElement("input");
-                input.type = "radio";
-                input.name = "answer";
+                input.type = questionData.multiSelect ? "checkbox" : "radio";
+                input.name = questionData.multiSelect ? `answer${currentIndex}_${index}` : "answer";
                 input.id = id;
                 input.value = answer;
                 input.classList.add("mt-2", "ml-7","mr-6");
+
+                const saved = userAnswers[currentIndex];
+                if (saved && saved.includes(answer)) input.checked = true;
 
                 const label = document.createElement("label");
                 label.htmlFor = id;
@@ -65,13 +180,25 @@
                 wrapper.appendChild(label);
                 answersBox.appendChild(wrapper);
             });
-            currentIndex++;
-            if (currentIndex >= questions.length) {
-                currentIndex = 0;  // Loop back or disable button
+            // Show/hide previous button
+
+            // Update next button to finish questionnaire if at the end of the questions
+            prevBtn.classList.toggle("hidden", currentIndex === 0);
+            nextBtn.textContent = currentIndex === questions.length - 1 ? "Finish Questionnaire" : "Next Question";
+            nextBtn.onclick = currentIndex === questions.length - 1 ? finishQuestionnaire : nextQuestion;
+           
+        }
+
+        // Handle previous question button
+        function prevQuestion() {
+            if (currentIndex > 0) {
+                renderQuestion(currentIndex - 1);
             }
         }
-    // Initialize with the first question
-        window.onload = nextQuestion;
 
+         // Finish the questionnaire and show dog matches
+        function finishQuestionnaire() {
+            window.location.href = "/dog-matches/";
+        }
     </script>
 {% endblock %}

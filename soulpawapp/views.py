@@ -7,3 +7,7 @@ def intro(request):
 def questionnaire(request):
     #return HttpResponse("This is the questionnaire page.")
     return render(request, "questionnaire.html")
+
+def dog_matches(request):
+    #return HttpResponse("This is the dog matches page.")
+    return render(request, "dog-matches.html")
