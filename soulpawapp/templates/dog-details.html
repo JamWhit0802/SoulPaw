@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title%} Dog Details {% endblock %}
+{% block dog_details %}
+    <h1>{{ dog.name }}</h1>
+    <p>{{ dog.breed }} — {{ dog.age }} — {{ dog.sex }} — {{ dog.size }}</p>
+    <p>Location: {{ dog.location }}</p>
+    <p>Status: {{ dog.status }}</p>
+
+    {% if dog.pictures %}
+        {% for pic in dog.pictures %}
+            <img src="{{ pic }}" alt="{{ dog.name }}" style="max-width:400px;">
+        {% endfor %}
+    {% else %}
+        <img src="{% static 'img/no-image.png' %}" alt="No image" style="max-width:400px;">
+    {% endif %}
+
+    <h3>Description</h3>
+    <p>{{ dog.description|linebreaks }}</p>
+
+    <h3>Adoption Info</h3>
+    {% if dog.organization %}
+        <p><strong>Organization:</strong> {{ dog.organization.name }}</p>
+
+        {% if dog.organization.website %}
+            <p><a href="{{ dog.organization.website }}" target="_blank">Visit Organization Website</a></p>
+        {% endif %}
+
+        {% if dog.organization.facebook %}
+            <p><a href="{{ dog.organization.facebook }}" target="_blank">Facebook Page</a></p>
+        {% endif %}
+
+        {% if dog.organization.adoption_process %}
+            <h4>Adoption Process</h4>
+            <p>{{ dog.organization.adoption_process|linebreaks }}</p>
+        {% endif %}
+    {% else %}
+        <p>No adoption info available.</p>
+    {% endif %}
+
+    <p><a href="{% url 'dog_matches' %}">Back to list</a></p>
+{% endblock %}

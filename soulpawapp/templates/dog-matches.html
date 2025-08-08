@@ -1,5 +1,28 @@
-{%extends "base.html"%}
-{%block title%}Dog Matches{%endblock%}
-{%block dog-matches%}
-<div>this is the dog matches page</div>
-{%endblock%}
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+  Adoptable Dogs
+{% endblock %}
+
+{% block dog_matches %}
+    <h1>Dog Matches</h1>
+
+    {% for dog in dogs %}
+        <div class="dog-card">
+            <h3>{{ dog.name }}</h3>
+            <p>{{ dog.breed }} — {{ dog.age }} — {{ dog.location }}</p>
+
+            {% if dog.image_url %}
+                <img src="{{ dog.image_url }}" alt="{{ dog.name }}" style="width:200px;">
+            {% else %}
+                <img src="{% static 'img/no-image.png' %}" alt="No image" style="width:200px;">
+            {% endif %}
+
+            <p><a href="{% url 'dog_detail' dog.id %}">View details</a></p>
+        </div>
+    {% empty %}
+        <p>No dogs found.</p>
+    {% endfor %}
+    
+{% endblock %}
