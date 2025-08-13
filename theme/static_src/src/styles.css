@@ -10,12 +10,16 @@
 @source inline("mb-4", "mt-1", "text-gray-500", "font-bold", "flex", "items-center", "{m,p,t,b,r,l}-{1..12}");
 @source "../../../**/*.{html,py,js}";
 @layer utilities {
-  .sp-purple {
+  .sppurple {
     background-color: #c39cdb;
   }
-  .sp-blue
+  .spblue
   {
     background-color: #95bdfc;
+  }
+  .bspblue
+  {
+    border-color: #95bdfc;
   }
 }
 
