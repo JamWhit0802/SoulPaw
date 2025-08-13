@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title%} Dog Details {% endblock %}
+{% block dog_details %}
+    {% for dog in dogs %}
+        <div>
+            <div class="dog-card">
+                <h1>{{ dog.name }}</h1>
+                <p>{{ dog.breed }} — {{ dog.age }} — {{ dog.location }}</p>
+
+                {% if dog.image_url %}
+                    <img src="{{ dog.image_url }}" alt="{{ dog.name }}" style="max-width:400px;">
+                {% else %}
+                    <img src="{% static 'img/no-image.png' %}" alt="No image" style="max-width:400px;">
+                {% endif %}
+                {% if dog.organization.url%}
+                    <p><a href="{{ dog.organization.url }}" target="_blank" rel="noopener">View Organization</a></p>
+                {% endif %}
+            {% empty %}
+            <p>No dog details available.</p>   
+    {% endfor %}
+
+<p><a href="{% url 'dog_matches' %}">Back to list</a></p>
+{% endblock %}

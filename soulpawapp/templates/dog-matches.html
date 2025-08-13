@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+  Adoptable Dogs
+{% endblock %}
+
+{% block dog_matches %}
+
+    <div class="grid grid-cols-4 gap-4 mx-auto max-w-4x1 justify-items-center">
+        {% for dog in dogs %}
+            <div class="border border-8 border-solid rounded-lg p-4 m-4 dog-card min-h-[300px] min-w-[100px]" style="border-color: #95bdfc;">
+                <h3>{{ dog.name }}</h3>
+                <p>{{ dog.breed }} — {{ dog.age }} — {{ dog.location }}</p>
+
+                {% if dog.image_url %}
+                    <img src="{{ dog.image_url }}" alt="{{ dog.name }}" style="width:200px;height:200px">
+                {% else %}
+                    <img src="{% static 'img/no-image.png' %}" alt="No image" style="width:200px;height:200px">
+                {% endif %}
+
+                <p><a href="{% url 'dog_detail' dog.id %}">View details</a></p>
+            </div>
+        {% empty %}
+            <p>No dogs found.</p>
+        {% endfor %}
+        </div>
+{% endblock %}
